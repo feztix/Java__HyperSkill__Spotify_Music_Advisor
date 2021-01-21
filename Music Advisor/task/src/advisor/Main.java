@@ -1,45 +1,35 @@
+
 package advisor;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Service service = new Service();
         Scanner scanner = new Scanner(System.in);
         String query = scanner.nextLine();
         while(!query.equals("exit")) {
             switch (query) {
+                case("auth"):
+                    System.out.println("https://accounts.spotify.com/authorize?client_id=40e3cdf40f624b6396e8116f712c48aa&redirect_uri=http://localhost:8080&response_type=code");
+                    System.out.println(service.setAuthorization(true));
+                    break;
                 case ("new"):
-                    System.out.println("---NEW RELEASES---");
-                    System.out.println("Mountains [Sia, Diplo, Labrinth]\n" +
-                            "Runaway [Lil Peep]\n" +
-                            "The Greatest Show [Panic! At The Disco]\n" +
-                            "All Out Life [Slipknot]");
+                    System.out.println(service.getReleases());
                     break;
                 case ("featured"):
-                    System.out.println("---FEATURED---");
-                    System.out.println("Mellow Morning\n" +
-                            "Wake Up and Smell the Coffee\n" +
-                            "Monday Motivation\n" +
-                            "Songs to Sing in the Shower");
+                    System.out.println(service.getFeatured());
                     break;
                 case ("categories"):
-                    System.out.println("---CATEGORIES---");
-                    System.out.println("Top Lists\n" +
-                            "Pop\n" +
-                            "Mood\n" +
-                            "Latin");
+                    System.out.println(service.getCategories());
                     break;
                 case ("playlists Mood"):
-                    System.out.println("---MOOD PLAYLISTS---");
-                    System.out.println("Walk Like A Badass  \n" +
-                            "Rage Beats  \n" +
-                            "Arab Mood Booster  \n" +
-                            "Sunday Stroll");
+                    System.out.println(service.getPlaylists());
                     break;
-
             }
             query = scanner.nextLine();
         }
+        service.setAuthorization(false);
         System.out.println("---GOODBYE!---");
     }
 }
