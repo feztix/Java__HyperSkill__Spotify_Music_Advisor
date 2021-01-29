@@ -1,7 +1,10 @@
 package advisor;
 
+/**
+ * The engine of the advisor. Here are all the methods of work.
+ */
 public class Service {
-    boolean authorization = false;
+    boolean isAuthorised = false;
     String releases = "Mountains [Sia, Diplo, Labrinth]\n" +
             "Runaway [Lil Peep]\n" +
             "The Greatest Show [Panic! At The Disco]\n" +
@@ -19,13 +22,15 @@ public class Service {
             "Arab Mood Booster  \n" +
             "Sunday Stroll";
 
-    public String setAuthorization(boolean authorization) {
-        this.authorization = authorization;
-        return "---SUCCESS---";
+    public void setAuthorization() {
+        Authorisation authorisation = new Authorisation();
+        authorisation.getAccessCode();
+        authorisation.getAccessToken();
+        this.isAuthorised = true;
     }
 
     public String getReleases() {
-        if (authorization) {
+        if (isAuthorised) {
             return "---NEW RELEASES---\n" + releases;
         } else {
             return "Please, provide access for application.";
@@ -33,7 +38,7 @@ public class Service {
     }
 
     public String getFeatured() {
-        if (authorization) {
+        if (isAuthorised) {
             return "---FEATURED---\n" + featured;
         } else {
             return "Please, provide access for application.";
@@ -41,7 +46,7 @@ public class Service {
     }
 
     public String getCategories() {
-        if (authorization) {
+        if (isAuthorised) {
             return "---CATEGORIES---\n" + categories;
         } else {
             return "Please, provide access for application.";
@@ -49,7 +54,7 @@ public class Service {
     }
 
     public String getPlaylists() {
-        if (authorization) {
+        if (isAuthorised) {
             return "---MOOD PLAYLISTS---\n" + playlists;
         } else {
             return "Please, provide access for application.";
