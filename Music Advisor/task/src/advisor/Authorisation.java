@@ -17,9 +17,10 @@ import java.net.http.HttpResponse;
  */
 public class Authorisation {
     public static String SERVER_PATH = "https://accounts.spotify.com";
+    public static String API_SERVER_PATH = "https://api.spotify.com";
     public static String REDIRECT_URI = "http://localhost:8080";
     public static String CLIENT_ID = "40e3cdf40f624b6396e8116f712c48aa";
-    public static String CLIENT_SECRET = "1878880109a647ee8ce1cb63a3c85348";
+    public static String CLIENT_SECRET = "f22201d8b93a4f109c76ed1d7475083a";
     public static String ACCESS_TOKEN = "";
     public static String ACCESS_CODE = "";
 
