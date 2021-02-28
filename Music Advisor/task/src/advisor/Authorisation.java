@@ -1,5 +1,6 @@
 package advisor;
 
+import com.google.gson.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -97,6 +98,13 @@ public class Authorisation {
 
             assert response != null;
             System.out.println(response.body());
+
+            // получения JSON Access_token
+            String jsonAccessToken = response.body();
+            JsonObject jsonAccessTokenObject = JsonParser.parseString(jsonAccessToken).getAsJsonObject();
+            Authorisation.ACCESS_TOKEN = jsonAccessTokenObject.get("access_token").getAsString();
+            System.out.println(ACCESS_TOKEN);
+
             System.out.println("---SUCCESS---");
 
         } catch (InterruptedException | IOException e) {

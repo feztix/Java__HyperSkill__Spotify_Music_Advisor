@@ -1,10 +1,27 @@
 package advisor;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.io.IOException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.URI;
+import java.net.http.HttpResponse;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
 /**
  * The engine of the advisor. Here are all the methods of work.
  */
 public class Service {
     boolean isAuthorised = false;
+    GetContent getContent = new GetContent();
+
     String releases = "Mountains [Sia, Diplo, Labrinth]\n" +
             "Runaway [Lil Peep]\n" +
             "The Greatest Show [Panic! At The Disco]\n" +
@@ -38,8 +55,11 @@ public class Service {
     }
 
     public String getFeatured() {
+//        if (isAuthorised) {
+//            return "---FEATURED---\n" + featured;
+//        }
         if (isAuthorised) {
-            return "---FEATURED---\n" + featured;
+            return getContent.getFeatured();
         } else {
             return "Please, provide access for application.";
         }
