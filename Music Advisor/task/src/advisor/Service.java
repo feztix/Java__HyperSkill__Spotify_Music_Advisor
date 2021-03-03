@@ -48,7 +48,7 @@ public class Service {
 
     public String getReleases() {
         if (isAuthorised) {
-            return "---NEW RELEASES---\n" + releases;
+            return getContent.getReleases();
         } else {
             return "Please, provide access for application.";
         }
