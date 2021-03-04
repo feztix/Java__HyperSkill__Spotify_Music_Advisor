@@ -119,4 +119,31 @@ class GetContent {
         }
         return result.toString();
     }
+
+    /**
+     * Getting new releases from site
+     * @return - String, formatted output result of the request
+     */
+
+    public String getCategories() {
+        List<Info> infos = new ArrayList<>();
+        String response = getRequest(Authorisation.API_SERVER_PATH + CATEGORIES);
+
+        JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
+        JsonObject categories = jsonObject.getAsJsonObject("categories");
+
+        for (JsonElement item : categories.getAsJsonArray("items")) {
+            Info element = new Info();
+            element.setCategories(item.getAsJsonObject().get("name").toString().replaceAll("\"", ""));
+            infos.add(element);
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (Info each : infos) {
+            result.append(each.categories).append("\n");
+        }
+        return result.toString();
+
+    }
+
 }

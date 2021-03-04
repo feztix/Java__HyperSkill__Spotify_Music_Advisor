@@ -67,7 +67,8 @@ public class Service {
 
     public String getCategories() {
         if (isAuthorised) {
-            return "---CATEGORIES---\n" + categories;
+//            return "---CATEGORIES---\n" + categories;
+            return getContent.getCategories();
         } else {
             return "Please, provide access for application.";
         }
