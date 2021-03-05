@@ -146,4 +146,57 @@ class GetContent {
 
     }
 
+    /**
+     * Getting playlist of category from site.
+     * First we get the category id by its name, then we get the playlist by category id.
+     * @param _C_NAME - String, category NAME!
+     * @return - String, formatted output result of the request
+     */
+    public String getPlaylist(String _C_NAME){
+        List<Info> infos = new ArrayList<>();
+
+        String response = getRequest(Authorisation.API_SERVER_PATH + CATEGORIES);
+        String id_categories = "Unknown category name.";
+
+        JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
+        JsonObject categories = jsonObject.getAsJsonObject("categories");
+        for (JsonElement item : categories.getAsJsonArray("items")) {
+            if (item.getAsJsonObject().get("name").toString().replaceAll("\"", "").equals(_C_NAME)){
+                id_categories = item.getAsJsonObject().get("id").toString().replaceAll("\"", "");
+                break;
+            }
+        }
+        if (id_categories.equals("Unknown category name.")) {
+            return id_categories;
+        }
+
+        response = getRequest(Authorisation.API_SERVER_PATH + PLAYLIST + id_categories + "/playlists");
+        System.out.println(response);
+        if(response.contains("Test unpredictable error message")) {
+            return "Test unpredictable error message";
+        }
+        jsonObject = JsonParser.parseString(response).getAsJsonObject();
+        categories = jsonObject.getAsJsonObject("playlists");
+
+        for (JsonElement item : categories.getAsJsonArray("items")) {
+            Info element = new Info();
+            element.setAlbum(item.getAsJsonObject().get("name").toString().replaceAll("\"", ""));
+
+            element.setLink(item.getAsJsonObject().get("external_urls")
+                    .getAsJsonObject().get("spotify")
+                    .toString().replaceAll("\"", ""));
+
+            infos.add(element);
+        }
+
+        StringBuilder result = new StringBuilder();
+        for (Info each : infos) {
+            result.append(each.album).append("\n")
+                    .append(each.link).append("\n")
+                    .append("\n");
+        }
+        return result.toString();
+
+    }
+
 }

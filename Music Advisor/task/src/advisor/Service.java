@@ -74,9 +74,14 @@ public class Service {
         }
     }
 
-    public String getPlaylists() {
+    /**
+     * Getting playlist for category NAME
+     * @param _C_NAME - String, name of category, not id!
+     * @return - String, formatted output data
+     */
+    public String getPlaylists(String _C_NAME) {
         if (isAuthorised) {
-            return "---MOOD PLAYLISTS---\n" + playlists;
+            return getContent.getPlaylist(_C_NAME);
         } else {
             return "Please, provide access for application.";
         }
