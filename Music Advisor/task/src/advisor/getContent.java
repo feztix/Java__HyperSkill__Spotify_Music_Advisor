@@ -46,43 +46,35 @@ class GetContent {
     }
 
     /**
-     * Getting featured from site
+     * Getting categories from site
      * @return - String, formatted output result of the request
      */
-    public String getFeatured(){
+    public String getCategories() {
         List<Info> infos = new ArrayList<>();
-        String response = getRequest(Authorisation.API_SERVER_PATH + FEATURED);
+        String response = getRequest(Main.RESOURCE + CATEGORIES);
 
-        JsonObject jo = JsonParser.parseString(response).getAsJsonObject();
-        JsonObject categories = jo.getAsJsonObject("playlists");
-
+        JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
+        JsonObject categories = jsonObject.getAsJsonObject("categories");
         for (JsonElement item : categories.getAsJsonArray("items")) {
             Info element = new Info();
-            element.setAlbum(item.getAsJsonObject().get("name").toString().replaceAll("\"", ""));
-
-            element.setLink(item.getAsJsonObject().get("external_urls")
-                    .getAsJsonObject().get("spotify")
-                    .toString().replaceAll("\"", ""));
-
+            element.setCategories(item.getAsJsonObject().get("name").toString().replaceAll("\"", ""));
             infos.add(element);
         }
+
         StringBuilder result = new StringBuilder();
         for (Info each : infos) {
-            result.append(each.album).append("\n")
-                    .append(each.link).append("\n")
-                    .append("\n");
+            result.append(each.categories).append("\n").append("\n");;
         }
         return result.toString();
     }
 
     /**
-     * Getting new releases from site
+     * Getting news from site
      * @return - String, formatted output result of the request
      */
-
-    public String getReleases() {
+    public String getNews() {
         List<Info> infos = new ArrayList<>();
-        String response = getRequest(Authorisation.API_SERVER_PATH + NEW);
+        String response = getRequest(Main.RESOURCE + NEW);
 
         JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
         JsonObject categories = jsonObject.getAsJsonObject("albums");
@@ -121,29 +113,33 @@ class GetContent {
     }
 
     /**
-     * Getting new releases from site
+     * Getting featured from site
      * @return - String, formatted output result of the request
      */
-
-    public String getCategories() {
+    public String getFeatured(){
         List<Info> infos = new ArrayList<>();
-        String response = getRequest(Authorisation.API_SERVER_PATH + CATEGORIES);
+        String response = getRequest(Main.RESOURCE + FEATURED);
 
-        JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
-        JsonObject categories = jsonObject.getAsJsonObject("categories");
+        JsonObject jo = JsonParser.parseString(response).getAsJsonObject();
+        JsonObject categories = jo.getAsJsonObject("playlists");
 
         for (JsonElement item : categories.getAsJsonArray("items")) {
             Info element = new Info();
-            element.setCategories(item.getAsJsonObject().get("name").toString().replaceAll("\"", ""));
+            element.setAlbum(item.getAsJsonObject().get("name").toString().replaceAll("\"", ""));
+
+            element.setLink(item.getAsJsonObject().get("external_urls")
+                    .getAsJsonObject().get("spotify")
+                    .toString().replaceAll("\"", ""));
+
             infos.add(element);
         }
-
         StringBuilder result = new StringBuilder();
         for (Info each : infos) {
-            result.append(each.categories).append("\n");
+            result.append(each.album).append("\n")
+                    .append(each.link).append("\n")
+                    .append("\n");
         }
         return result.toString();
-
     }
 
     /**
@@ -155,7 +151,7 @@ class GetContent {
     public String getPlaylist(String _C_NAME){
         List<Info> infos = new ArrayList<>();
 
-        String response = getRequest(Authorisation.API_SERVER_PATH + CATEGORIES);
+        String response = getRequest(Main.RESOURCE + CATEGORIES);
         String id_categories = "Unknown category name.";
 
         JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
@@ -170,7 +166,7 @@ class GetContent {
             return id_categories;
         }
 
-        response = getRequest(Authorisation.API_SERVER_PATH + PLAYLIST + id_categories + "/playlists");
+        response = getRequest(Main.RESOURCE + PLAYLIST + id_categories + "/playlists");
         System.out.println(response);
         if(response.contains("Test unpredictable error message")) {
             return "Test unpredictable error message";
@@ -198,5 +194,4 @@ class GetContent {
         return result.toString();
 
     }
-
 }

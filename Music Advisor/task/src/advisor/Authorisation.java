@@ -1,6 +1,7 @@
 package advisor;
 
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -17,8 +18,6 @@ import java.net.http.HttpResponse;
  * and use it to get the authorization token
  */
 public class Authorisation {
-    public static String SERVER_PATH = "https://accounts.spotify.com";
-    public static String API_SERVER_PATH = "https://api.spotify.com";
     public static String REDIRECT_URI = "http://localhost:8080";
     public static String CLIENT_ID = "40e3cdf40f624b6396e8116f712c48aa";
     public static String CLIENT_SECRET = "f22201d8b93a4f109c76ed1d7475083a";
@@ -30,7 +29,7 @@ public class Authorisation {
      */
     public void getAccessCode() {
         //Creating a line to go to in the browser
-        String uri = Authorisation.SERVER_PATH + "/authorize"
+        String uri = Main.SERVER_PATH + "/authorize"
                 + "?client_id=" + CLIENT_ID
                 + "&redirect_uri=" + REDIRECT_URI
                 + "&response_type=code";
@@ -81,7 +80,7 @@ public class Authorisation {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Content-Type", "application/x-www-form-urlencoded")
-                .uri(URI.create(Authorisation.SERVER_PATH + "/api/token"))
+                .uri(URI.create(Main.SERVER_PATH + "/api/token"))
                 .POST(HttpRequest.BodyPublishers.ofString(
                         "grant_type=authorization_code"
                                 + "&code=" + ACCESS_CODE

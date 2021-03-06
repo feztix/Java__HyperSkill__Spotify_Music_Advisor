@@ -11,6 +11,7 @@ public class Advisor {
     public void start() {
 
         Service service = new Service();
+        PrintPage printPage = new PrintPage(Main.PAGE);
         Scanner scanner = new Scanner(System.in);
         String[] query = scanner.nextLine().split(" ");
         while (!query[0].equals("exit")) {
@@ -19,24 +20,29 @@ public class Advisor {
                     service.setAuthorization();
                     break;
                 case ("new"):
-                    System.out.println(service.getReleases());
+                    printPage.print(service.getReleases());
                     break;
                 case ("featured"):
-                    System.out.println(service.getFeatured());
+                    printPage.print(service.getFeatured());
                     break;
                 case ("categories"):
-                    System.out.println(service.getCategories());
+                    printPage.print(service.getCategories());
                     break;
                 case ("playlists"):
                     StringBuilder category = new StringBuilder();
-                    for(int i = 1; i < query.length; i++){
+                    for (int i = 1; i < query.length; i++) {
                         category.append(query[i]).append(" ");
                     }
-                    System.out.println(service.getPlaylists(category.toString().trim()));
+                    printPage.print(service.getPlaylists(category.toString().trim()));
+                    break;
+                case ("next"):
+                    printPage.printNext();
+                    break;
+                case ("prev"):
+                    printPage.printPrev();
                     break;
             }
             query = scanner.nextLine().split(" ");
         }
-        System.out.println("---GOODBYE!---");
     }
 }
